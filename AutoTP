@@ -1,0 +1,47 @@
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer 
+local character = player.CharacterAdded:Wait() 
+local Humanoid = character:WaitForChild("Humanoid")
+local initialized = false
+print("Made by anonymous A.")
+warn("Activate NeoNeuronic TP: LeftControl")
+warn("Deactivate NeoNeuronic TP: RightControl")
+local ui = Instance.new("ScreenGui")
+ui.Parent = player.PlayerGui
+local textlabel = Instance.new("TextLabel")
+textlabel.Parent = ui
+textlabel.Position = UDim2.new(0, 120, 0, 125) 
+textlabel.Size = UDim2.new(0.2, 0, 0.2, 0)
+textlabel.BackgroundColor3 = Color3.fromHex('#4b4e5c')
+textlabel.TextScaled = true
+textlabel.Text = "Enable AutoTP: LControl. \n Disable AutoTP: RControl \n Hide this UI: RShift \n Show this UI: LShift \n MADE BY ANONYMOUS A"
+UIS.InputBegan:Connect(function(input, GPE) 
+	if input.KeyCode == Enum.KeyCode.LeftControl then
+		initialized = true
+		character.Animate.Enabled = false
+		Humanoid.WalkSpeed = 0
+		while initialized == true do
+			wait(0.05)
+			character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(Vector3.new(math.random(1, 100), math.random(0, 0), math.random(1, 100)))
+			character:WaitForChild("HumanoidRootPart").CFrame = character:WaitForChild("HumanoidRootPart").CFrame + Vector3.new(0, 50, 0)
+			wait(0.05)
+		end
+
+
+	end
+
+	if input.KeyCode == Enum.KeyCode.RightControl then
+		initialized = false
+		character.Animate.Enabled = true
+		Humanoid.WalkSpeed = 16
+	end
+
+	if input.KeyCode == Enum.KeyCode.LeftShift then
+		textlabel.Visible = true
+	end
+
+	if input.KeyCode == Enum.KeyCode.RightShift then
+		textlabel.Visible = false
+	end
+end)
